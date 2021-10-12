@@ -30,7 +30,10 @@ public enum ResultCode {
     SETTLEMENT_NOT_NULL(300006, "是否结算不能为空！"),
     NEW_PASSWORD_NOT_NULL(300007, "新密码不能为空！"),
     CONFIRM_NEW_PASSWORD_NOT_NULL(300008, "确认新密码不能为空！"),
-    NOT_CONFIRM_NEW_PASSWORD(300009, "确认新密码不正确！");
+
+    NOT_CONFIRM_NEW_PASSWORD(300009, "确认新密码不正确！"),
+    NAMECN_NOT_NULL(300010, "姓名不能为空！"),
+    MOBILE_NOT_NULL(300011, "手机号不能为空！");
 
     private Integer code;
 

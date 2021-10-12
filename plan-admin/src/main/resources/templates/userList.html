@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>用户管理</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}" media="all"/>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/js/jquery-1.11.1.min.js}"></script>
+    <script th:src="@{/static/js/common.js}"></script>
+</head>
+<body>
+<div class="layui-form-item" style="margin-top: 50px;margin-left: 30px;margin-bottom: 60px">
+
+    <label class="layui-form-label">姓名：</label>
+    <div class="layui-input-inline">
+        <input class="layui-input" name="nameInput" id="nameInput" autocomplete="off">
+    </div>
+
+    <label class="layui-form-label">手机号：</label>
+    <div class="layui-input-inline">
+        <input class="layui-input" name="mobileInput" id="mobileInput" autocomplete="off">
+    </div>
+
+    <button id="reloadBtn" class="layui-btn" data-type="reload">搜索</button>
+
+    <button id="save" class="layui-btn" style="background-color:blue" lay-event="save">新增</button>
+</div>
+
+<table class="layui-hide" id="test" lay-filter="user"></table>
+
+<script type="text/html" id="bar">
+    <button class="layui-btn layui-btn-sm" lay-event="update">重置密码</button>
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
+</script>
+
+<script type="text/javascript" th:inline="none">
+    layui.use(['table', 'form'], function () {
+        var table = layui.table,
+            form = layui.form;
+
+        table.render({
+            elem: '#test'
+            , url: parent.ueditorPath + '/amg/user/v1?accessToken=' + accessToken + '&terminal=pc'
+            , parseData: function (res) {
+                console.log(res);
+                return {
+                    "code": res.code,
+                    "msg": res.message,
+                    "data": res.data.records,
+                    "count": res.data.total
+                }
+            }
+            , response: {
+                statusCode: 200
+            }
+            , cols: [[
+                {field: 'nameCn', title: '姓名'}
+                , {field: 'jobNumber', title: '工号'}
+                , {field: 'gender', title: '性别'}
+                , {field: 'mobile', title: '手机号'}
+                , {field: 'mailbox', title: '邮箱'}
+                , {field: '', title: '操作', toolbar: '#bar'}
+            ]]
+            , page: true
+            , id: 'testReload'
+        });
+
+        //搜索
+        $("#reloadBtn").click(function (ev) {
+            var nameInput = $("#nameInput").val();
+            var mobileInput = $("#mobileInput").val();
+
+            console.info(settlementSelect);
+            table.reload('testReload', {
+                url: parent.ueditorPath + '/amg/user/v1'
+                , where: {
+                    nameCn: nameInput,
+                    accessToken: accessToken,
+                    mobile: mobileInput,
+                    terminal: 'pc'
+                } //设定异步数据接口的额外参数
+            });
+        });
+        //新增
+        $("#save").click(function () {
+            layer.open({
+                type: 2,
+                title: "新增",
+                area: ['60%', '90%'],
+                fix: false,
+                maxmin: true,
+                shadeClose: true,
+                shade: 0.4,
+                skin: 'layui-layer-rim',
+                content: [parent.ueditorPath + '/saveUser', "no"]
+            });
+        });
+        //操作
+        table.on('tool(settlement)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            if (layEvent === 'del') { //删除
+                layer.confirm('确定要删除吗？', function (index) {
+                    $.ajax({
+                        url: parent.ueditorPath + '/amg/settlement/v1/' + data.id + '?accessToken=' + accessToken + '&terminal=pc',
+                        type: 'delete',
+                        success: function (data) {
+                            if (data.code == 200) {
+                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                layer.close(index);
+                                console.log(index);
+                                layer.msg("删除成功", {icon: 1});
+                            } else {
+                                skipLogin(data.code,"删除失败");
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+            } else if (layEvent === 'update') { //编辑
+                layer.confirm('确定要重置密码吗？重置默认密码：123456', function (index) {
+                    $.ajax({
+                        url: parent.ueditorPath + '/amg/settlement/v1/' + data.id + '?accessToken=' + accessToken + '&terminal=pc',
+                        type: 'delete',
+                        success: function (data) {
+                            if (data.code == 200) {
+                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                layer.close(index);
+                                console.log(index);
+                                layer.msg("删除成功", {icon: 1});
+                            } else {
+                                skipLogin(data.code,"删除失败");
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,7 +1,6 @@
 server:
   port: 8877
 
-
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

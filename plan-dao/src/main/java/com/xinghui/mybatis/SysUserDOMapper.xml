@@ -24,5 +24,14 @@
     <sql id="Base_Column_List">
         id, name_cn, name_en, job_number, gender, avatar, mobile, mailbox, account_id, create_by, create_time, update_by, update_time, is_deleted
     </sql>
+    <select id="page" resultType="com.xinghui.vo.UserInfoVO">
+        select * from sys_user where is_deleted = 0
+        <if test="name != null and name != ''">
+            and name_cn like concat('%',#{name},'%')
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and mobile like concat('%',#{mobile},'%')
+        </if>
+    </select>
 
 </mapper>

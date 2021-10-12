@@ -1,8 +1,11 @@
 package com.xinghui.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xinghui.dto.UserInfoDTO;
 import com.xinghui.entity.SysUserDO;
 import com.xinghui.vo.SelectVO;
+import com.xinghui.vo.UserInfoVO;
 
 import java.util.List;
 
@@ -22,5 +25,23 @@ public interface SysUserService extends IService<SysUserDO> {
      * @return
      */
     List<SelectVO> lists();
+
+    /**
+     * 获取用户分页列表
+     *
+     * @param pageNum  第几页
+     * @param pageSize 每页大小
+     * @param name     姓名
+     * @param mobile   手机号
+     * @return
+     */
+    Page<UserInfoVO> page(int pageNum, int pageSize, String name, String mobile);
+
+    /**
+     * 新增用户
+     *
+     * @param userInfoDTO
+     */
+    void save(UserInfoDTO userInfoDTO);
 
 }

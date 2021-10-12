@@ -3,6 +3,7 @@ package com.xinghui.ctrl.mgt;
 
 import com.xinghui.dto.UserInfoDTO;
 import com.xinghui.entity.SysUserDO;
+import com.xinghui.service.AccountInfoService;
 import com.xinghui.service.SysUserService;
 import com.xinghui.utils.RequestContextUtil;
 import com.xinghui.utils.ResponseUtil;
@@ -36,11 +37,24 @@ public class SysUserMgtCtrl {
     @Resource
     private SysUserService sysUserService;
 
+    @Resource
+    private AccountInfoService accountInfoService;
+
     @GetMapping("/v1/query")
     @ApiOperation(value = "查询用户信息")
     @ResponseBody
     public ResultDTO query() {
         return ResponseUtil.success(mapperFacade.map(RequestContextUtil.userInfo(), UserInfoVO.class));
+    }
+
+    @GetMapping("/v1")
+    @ApiOperation(value = "用户信息列表")
+    @ResponseBody
+    public ResultDTO page(@RequestParam(defaultValue = "1") int pageNum,
+                          @RequestParam(defaultValue = "10") int pageSize,
+                          @RequestParam(required = false) String name,
+                          @RequestParam(required = false) String mobile) {
+        return ResponseUtil.success(sysUserService.page(pageNum, pageSize, name, mobile));
     }
 
     @GetMapping("/v1/list")
@@ -65,6 +79,14 @@ public class SysUserMgtCtrl {
         SysUserDO sysUserDO = mapperFacade.map(userInfoDTO, SysUserDO.class);
         sysUserDO.setId(RequestContextUtil.userId());
         return ResponseUtil.success(sysUserService.updateById(sysUserDO));
+    }
+
+    @PostMapping("/v1")
+    @ApiOperation(value = "新增用户信息")
+    @ResponseBody
+    public ResultDTO save(@RequestBody UserInfoDTO userInfoDTO) {
+        sysUserService.save(userInfoDTO);
+        return ResponseUtil.success(true);
     }
 
 }

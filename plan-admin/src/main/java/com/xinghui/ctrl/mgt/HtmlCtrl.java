@@ -30,7 +30,7 @@ public class HtmlCtrl {
     @RequestMapping("/user")
     @UnAccessTokenAuth
     public String user() {
-        return "user";
+        return "userList";
     }
 
     @RequestMapping("/role")
@@ -55,6 +55,12 @@ public class HtmlCtrl {
     @UnAccessTokenAuth
     public String updatePassWord() {
         return "updatePassWord";
+    }
+
+    @RequestMapping("/saveUser")
+    @UnAccessTokenAuth
+    public String saveUser() {
+        return "saveUser";
     }
 
 }
