@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/employee?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
-    password: root
+    password: 123456
     hikari:
       ## 最小空闲连接数量
       minimum-idle: 5
@@ -22,14 +22,14 @@ spring:
       connection-test-query: SELECT 1
   redis:
     database: 0
-    host: 192.168.15.41
+    host: 172.20.10.4
     port: 6379
     password: 123456
     jedis:
       pool:
         max-active: 20
-  mvc.static-path-pattern: /static/**
-  thymeleaf:
+  mvc.static-path-pattern: /static/**3333333
+  thymeleaf:                                                        
   cache: false
   enabled: true
 
