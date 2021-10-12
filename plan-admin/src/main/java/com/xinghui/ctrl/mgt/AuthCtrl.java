@@ -20,10 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -96,6 +93,21 @@ public class AuthCtrl {
         accountService.updateById(accountInfoDO);
         //撤销token
         accountService.removeToken(RequestContextUtil.userId(), RequestContextUtil.terminal());
+        return ResponseUtil.success(true);
+    }
+
+    @PostMapping("/v1/reset-password/{userId}")
+    @ApiOperation(value = "重置密码")
+    public ResultDTO resetPassWord(@PathVariable Long userId) {
+        //获取人员信息
+        SysUserDO sysUserDO = sysUserService.getById(userId);
+        //获取登入信息
+        AccountInfoDO accountInfoDO = accountService.getById(sysUserDO.getAccountId());
+        accountInfoDO.setPassword(encoder.encode("123456"));
+        //更新密码
+        accountService.updateById(accountInfoDO);
+        //撤销token
+        accountService.removeToken(userId, RequestContextUtil.terminal());
         return ResponseUtil.success(true);
     }
 

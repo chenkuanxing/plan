@@ -67,6 +67,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> im
         save(sysUserDO);
     }
 
+    @Override
+    public void remove(Long id) {
+        //查询用户信息
+        SysUserDO sysUserDO = getById(id);
+        //删除用户信息
+        removeById(id);
+        //删除登入信息
+        accountInfoService.removeById(sysUserDO.getAccountId());
+    }
+
     private List<SelectVO> toSelectVo(List<SysUserDO> sysUserDOList) {
         List<SelectVO> selectVOList = new ArrayList<>();
         sysUserDOList.forEach(sysUserDO -> {

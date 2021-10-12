@@ -89,4 +89,12 @@ public class SysUserMgtCtrl {
         return ResponseUtil.success(true);
     }
 
+    @DeleteMapping("/v1/{id}")
+    @ApiOperation(value = "新增用户信息")
+    @ResponseBody
+    public ResultDTO delete(@PathVariable Long id) {
+        sysUserService.remove(id);
+        return ResponseUtil.success(true);
+    }
+
 }

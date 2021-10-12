@@ -44,4 +44,10 @@ public interface SysUserService extends IService<SysUserDO> {
      */
     void save(UserInfoDTO userInfoDTO);
 
+    /**
+     * 删除用户
+     *
+     * @param id 用户id
+     */
+    void remove(Long id);
 }
