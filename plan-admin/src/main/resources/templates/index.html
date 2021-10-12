@@ -122,7 +122,7 @@
                 success: function (data) {
                     if (data.code == 200) {
                         //跳转登入页
-                        location.href = parent.ueditorPath + "/login";
+                        window.parent.location.href = parent.ueditorPath + "/login";
                     }else {
                         skipLogin(data.code,data.message);
                     }

@@ -9,7 +9,7 @@ function skipLogin(code, message) {
         layer.msg(message, {icon: 5});
         if (code == 201 || code == 202 || code == 204 || code == 205 || code == 206) {
             //跳转登入页
-            location.href = parent.ueditorPath + "/login";
+            window.parent.location.href = parent.ueditorPath + "/login";
         }
     });
 
