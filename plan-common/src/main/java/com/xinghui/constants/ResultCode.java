@@ -27,7 +27,10 @@ public enum ResultCode {
     ADDRESS_NOT_NULL(300003, "任务地址不能为空！"),
     PLANDATE_NOT_NULL(300004, "任务时间不能为空！"),
     MONEY_NOT_NULL(300005, "金额不能为空！"),
-    SETTLEMENT_NOT_NULL(300006, "是否结算不能为空");
+    SETTLEMENT_NOT_NULL(300006, "是否结算不能为空！"),
+    NEW_PASSWORD_NOT_NULL(300007, "新密码不能为空！"),
+    CONFIRM_NEW_PASSWORD_NOT_NULL(300008, "确认新密码不能为空！"),
+    NOT_CONFIRM_NEW_PASSWORD(300009, "确认新密码不正确！");
 
     private Integer code;
 

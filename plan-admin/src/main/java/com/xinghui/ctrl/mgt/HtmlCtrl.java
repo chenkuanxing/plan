@@ -39,4 +39,22 @@ public class HtmlCtrl {
         return "role";
     }
 
+    @RequestMapping("/mainPlan")
+    @UnAccessTokenAuth
+    public String mainPlan() {
+        return "mainPlan";
+    }
+
+    @RequestMapping("/userInfo")
+    @UnAccessTokenAuth
+    public String userInfo() {
+        return "userInfo";
+    }
+
+    @RequestMapping("/updatePassWord")
+    @UnAccessTokenAuth
+    public String updatePassWord() {
+        return "updatePassWord";
+    }
+
 }

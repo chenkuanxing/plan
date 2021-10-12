@@ -34,13 +34,13 @@
         <div class="layui-logo layui-hide-xs layui-bg-black">星琴</div>
 
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a href="">layui文档</a></li>
+            <li class="layui-nav-item"><a href="">操作手册</a></li>
             <li class="layui-nav-item layui-hide layui-show-md-inline-block">
                 <a id="personalInfo" href="javascript:;"></a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">个人信息</a></dd>
-                    <dd><a href="">设置</a></dd>
-                    <dd><a href="">退出</a></dd>
+                    <dd class="user-info-nav" id="/amg/user/v1/user-info"><a href="javascript:;">个人信息</a></dd>
+                    <dd class="updatePass"><a href="javascript:;">修改密码</a></dd>
+                    <dd id="logout"><a href="javascript:;">退出</a></dd>
                 </dl>
             </li>
         </ul>
@@ -72,7 +72,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <iframe src="" id="iframeMain" frameborder="0" height="100%" width="100%"></iframe>
+        <iframe src="/mainPlan" id="iframeMain" frameborder="0" height="100%" width="100%"></iframe>
     </div>
 
     <div class="layui-footer">
@@ -87,11 +87,47 @@
             , util = layui.util
             , $ = layui.$;
 
+        $(".updatePass").on("click", function () {
+            layer.open({
+                type: 2,
+                title: "修改密码",
+                area: ['40%', '60%'],
+                fix: false,
+                maxmin: true,
+                shadeClose: true,
+                shade: 0.4,
+                skin: 'layui-layer-rim',
+                content: [parent.ueditorPath + '/updatePassWord', "no"]
+            });
+        });
     });
 
-    $(function(){
+    $(function () {
         $(".custom-nav").on("click", function () {
             $("#iframeMain").attr("src", $(this).attr("id"));
+        });
+        $(".user-info-nav").on("click", function () {
+            $("#iframeMain").attr("src", $(this).attr("id") + '?accessToken=' + accessToken + '&terminal=pc');
+        });
+
+        //退出登入
+        $("#logout").on("click", function () {
+            $.ajax({
+                type: "post",
+                headers: {
+                    'accessToken': accessToken,
+                    'terminal': 'pc'
+                },
+                url: parent.ueditorPath + "/amg/auth/v1/logout",
+                success: function (data) {
+                    if (data.code == 200) {
+                        //跳转登入页
+                        location.href = parent.ueditorPath + "/login";
+                    }else {
+                        skipLogin(data.code,data.message);
+                    }
+                }
+            });
         });
     })
 </script>

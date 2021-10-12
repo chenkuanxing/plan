@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}" media="all"/>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/js/jquery-1.11.1.min.js}"></script>
+    <script th:src="@{/static/js/common.js}"></script>
+
+</head>
+<body>
+
+<div class="layui-form" style="margin-top: 100px;margin-left: 30%;">
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">姓名：</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" th:value="${userInfo.getNameCn()}" name="maneCn"
+                       id="maneCn" lay-verify="maneCn" autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">工号：</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" th:value="${userInfo.getJobNumber()}" name="jobNumber"
+                       id="jobNumber" lay-verify="jobNumber" autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">性别：</label>
+            <div class="layui-input-inline">
+                <label class="radio-box"><input type="radio" th:checked="${userInfo.getGender() == 1? 'true' : 'false'}"
+                                                value="1" id="gender1" name="gender">男</label>
+                <label class="radio-box"><input type="radio" th:checked="${userInfo.getGender() == 0? 'true' : 'false'}"
+                                                value="0" id="gender2" name="gender">女</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">电话：</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" th:value="${userInfo.getMobile()}" name="mobile"
+                       id="mobile" lay-verify="mobile" autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">邮箱：</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" th:value="${userInfo.getMailbox()}" name="mailbox"
+                       id="mailbox" lay-verify="mailbox" autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="submit" lay-submit lay-filter="submit" class="layui-btn layui-btn-normal layui-btn-radius">确认
+            </button>
+        </div>
+    </div>
+
+</div>
+<script>
+    //JavaScript代码区域
+    layui.use(['form','layer'], function () {
+        var form = layui.form,
+        layer = layui.layer;
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            $.ajax({
+                type: "put",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'accessToken': accessToken,
+                    'terminal': 'pc'
+                },
+                url: parent.ueditorPath + "/amg/user/v1",
+                data: JSON.stringify(data.field),
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg("修改成功");
+                    }else {
+                        skipLogin(data.code, data.message);
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

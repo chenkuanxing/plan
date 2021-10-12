@@ -75,7 +75,7 @@ public class AccountInfoServiceImpl extends ServiceImpl<AccountInfoMapper, Accou
     public String register(String username, String nameCn) {
         AccountInfoDO accountInfoDO = new AccountInfoDO();
         accountInfoDO.setAccountName(username);
-        accountInfoDO.setPassword(encoder.encode(SecureUtil.md5("123456")));
+        accountInfoDO.setPassword(encoder.encode("123456"));
         accountInfoService.save(accountInfoDO);
 
         SysUserDO sysUserDO = new SysUserDO();
