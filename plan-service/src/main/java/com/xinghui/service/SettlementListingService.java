@@ -24,16 +24,24 @@ public interface SettlementListingService extends IService<SettlementListingDO> 
      * @param settlement       是否结算
      * @param settlementByName 结算人
      * @param gainByName       获取人
-     * @return
+     * @return 分页
      */
     Page<SettlementListingVO> page(int pageNum, int pageSize, Integer settlement, String settlementByName, String gainByName);
 
     /**
      * 编辑
      *
-     * @param settlementListingDTO
-     * @return
+     * @param settlementListingDTO 编辑对象
+     * @return boolean
      */
     Boolean update(SettlementListingDTO settlementListingDTO);
+
+    /**
+     * 新增
+     *
+     * @param settlementListingDTO 新增对象
+     * @return boolean
+     */
+    Boolean save(SettlementListingDTO settlementListingDTO);
 
 }

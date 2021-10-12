@@ -68,12 +68,22 @@ public class SettlementListingMgtCtrl {
         return ResponseUtil.success(settlementListingService.update(settlementListingDTO));
     }
 
+    @PostMapping("/v1")
+    @ApiOperation(value = "新增")
+    @ResponseBody
+    public ResultDTO save(@RequestBody SettlementListingDTO settlementListingDTO) {
+        return ResponseUtil.success(settlementListingService.save(settlementListingDTO));
+    }
+
     @GetMapping("/v1/query")
     @ApiOperation(value = "查询")
     public ModelAndView query(@RequestParam(required = false) Long id) {
-        ModelAndView modelAndView = new ModelAndView("updatePlan");
+        ModelAndView modelAndView;
         List<SelectVO> userList = sysUserService.lists();
-        if (id != null) {
+        if (id == null) {
+            modelAndView = new ModelAndView("savePlan");
+        } else {
+            modelAndView = new ModelAndView("updatePlan");
             SettlementListingDO settlementListingDO = settlementListingService.getById(id);
             SettlementListingVO settlementListingVO = mapperFacade.map(settlementListingDO, SettlementListingVO.class);
             userList.forEach(selectVO -> {

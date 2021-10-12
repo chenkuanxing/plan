@@ -8,8 +8,8 @@ import com.xinghui.dao.SettlementListingMapper;
 import com.xinghui.dto.SettlementListingDTO;
 import com.xinghui.entity.SettlementListingDO;
 import com.xinghui.enums.SettlementTypeEnum;
-import com.xinghui.vo.SettlementListingVO;
 import com.xinghui.service.SettlementListingService;
+import com.xinghui.vo.SettlementListingVO;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -36,9 +36,9 @@ public class SettlementListingServiceImpl extends ServiceImpl<SettlementListingM
         Page<SettlementListingVO> page = new Page<>(pageNum, pageSize);
         List<SettlementListingVO> list = baseMapper.page(page, settlement, settlementByName, gainByName);
         list.forEach(settlementListingVO -> {
-            settlementListingVO.setSettlementName("未结算");
+            settlementListingVO.setSettlementName(SettlementTypeEnum.NOT.getMsg());
             if (settlementListingVO.getSettlement()) {
-                settlementListingVO.setSettlementName("已结算");
+                settlementListingVO.setSettlementName(SettlementTypeEnum.YES.getMsg());
             }
         });
         page.setRecords(list);
@@ -50,6 +50,13 @@ public class SettlementListingServiceImpl extends ServiceImpl<SettlementListingM
         validation(settlementListingDTO);
         SettlementListingDO settlementListingDO = mapperFacade.map(settlementListingDTO, SettlementListingDO.class);
         return updateById(settlementListingDO);
+    }
+
+    @Override
+    public Boolean save(SettlementListingDTO settlementListingDTO) {
+        validation(settlementListingDTO);
+        SettlementListingDO settlementListingDO = mapperFacade.map(settlementListingDTO, SettlementListingDO.class);
+        return save(settlementListingDO);
     }
 
     private void validation(SettlementListingDTO settlementListingDTO) {

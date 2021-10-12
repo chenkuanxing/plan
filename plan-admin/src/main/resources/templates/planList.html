@@ -35,9 +35,16 @@
     </div>
 
     <button id="reloadBtn" class="layui-btn" data-type="reload">搜索</button>
+
+    <button id="save" class="layui-btn" style="background-color:blue" lay-event="save">新增</button>
 </div>
 
 <table class="layui-hide" id="test" lay-filter="settlement"></table>
+
+<script type="text/html" id="bar">
+    <button class="layui-btn layui-btn-sm" lay-event="update">编辑</button>
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
+</script>
 
 <script type="text/javascript" th:inline="none">
     layui.use(['table', 'form'], function () {
@@ -91,8 +98,21 @@
                     terminal: 'pc'
                 } //设定异步数据接口的额外参数
             });
-        })
-
+        });
+        //新增
+        $("#save").click(function () {
+            layer.open({
+                type: 2,
+                title: "新增",
+                area: ['60%', '90%'],
+                fix: false,
+                maxmin: true,
+                shadeClose: true,
+                shade: 0.4,
+                skin: 'layui-layer-rim',
+                content: [parent.ueditorPath + '/amg/settlement/v1/query?accessToken=' + accessToken + '&terminal=pc', "no"]
+            });
+        });
         //操作
         table.on('tool(settlement)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
@@ -103,7 +123,7 @@
             if (layEvent === 'del') { //删除
                 layer.confirm('确定要删除吗？', function (index) {
                     $.ajax({
-                        url: parent.ueditorPath + '/amg/settlement/v1/' + data.id,
+                        url: parent.ueditorPath + '/amg/settlement/v1/' + data.id + '?accessToken=' + accessToken + '&terminal=pc',
                         type: 'delete',
                         success: function (data) {
                             if (data.code == 200) {
@@ -112,7 +132,7 @@
                                 console.log(index);
                                 layer.msg("删除成功", {icon: 1});
                             } else {
-                                layer.msg("删除失败", {icon: 5});
+                                skipLogin(data.code,"删除失败");
                             }
                         }
                     });
@@ -134,10 +154,6 @@
             }
         });
     });
-</script>
-<script type="text/html" id="bar">
-    <button class="layui-btn layui-btn-sm" lay-event="update">编辑</button>
-    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
 </script>
 
 </body>
