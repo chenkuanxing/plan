@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinghui.dao.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xinghui.entity.SysUserDO">
+        <id column="id" property="id" />
+        <result column="name_cn" property="nameCn" />
+        <result column="name_en" property="nameEn" />
+        <result column="job_number" property="jobNumber" />
+        <result column="gender" property="gender" />
+        <result column="avatar" property="avatar" />
+        <result column="mobile" property="mobile" />
+        <result column="mailbox" property="mailbox" />
+        <result column="account_id" property="accountId" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name_cn, name_en, job_number, gender, avatar, mobile, mailbox, account_id, create_by, create_time, update_by, update_time, is_deleted
+    </sql>
+
+</mapper>

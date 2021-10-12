@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>首页</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}" media="all"/>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/js/jquery-1.11.1.min.js}"></script>
+    <script th:src="@{/static/js/common.js}"></script>
+    <script>
+        $.ajax({
+            type: "get",
+            headers: {
+                'accessToken': accessToken,
+                'terminal': 'pc'
+            },
+            url: parent.ueditorPath + "/amg/user/v1/query",
+            success: function (data) {
+                if (data.code == 200) {
+                    console.log(data);
+                    $("#personalInfo").append('<img src="' + data.data.avatar + '" class="layui-nav-img">' + data.data.nameCn);
+                } else {
+                    skipLogin(data.code, data.message);
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-black">星琴</div>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="">layui文档</a></li>
+            <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+                <a id="personalInfo" href="javascript:;"></a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">个人信息</a></dd>
+                    <dd><a href="">设置</a></dd>
+                    <dd><a href="">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item"><a class="custom-nav" id="/planList" href="javascript:;">任务清单</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">管理设置</a>
+                    <dl class="layui-nav-child">
+                        <dd><a class="custom-nav" id="/user" href="javascript:;">用户管理</a></dd>
+                        <dd><a class="custom-nav" id="/role" href="javascript:;">权限管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">系统管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a class="custom-nav" href="javascript:;">系统信息</a></dd>
+                        <dd><a class="custom-nav" href="javascript:;">操作日志</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <iframe src="" id="iframeMain" frameborder="0" height="100%" width="100%"></iframe>
+    </div>
+
+    <div class="layui-footer">
+        <!--&lt;!&ndash; 底部固定区域 &ndash;&gt;-->
+        <!--底部固定区域-->
+    </div>
+</div>
+<script>
+    layui.use(['element', 'layer', 'util'], function () {
+        var element = layui.element
+            , layer = layui.layer
+            , util = layui.util
+            , $ = layui.$;
+
+    });
+
+    $(function(){
+        $(".custom-nav").on("click", function () {
+            $("#iframeMain").attr("src", $(this).attr("id"));
+        });
+    })
+</script>
+</body>
+</html>

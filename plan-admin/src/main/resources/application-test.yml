@@ -1,0 +1,40 @@
+server:
+  port: 8877
+
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/employee?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+    hikari:
+      ## 最小空闲连接数量
+      minimum-idle: 5
+      ## 连接池最大连接数，默认是10
+      maximum-pool-size: 10
+      ## 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 30000
+      ## 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认90000即15分钟
+      max-lifetime: 90000
+      ## 数据库连接超时时间,默认15秒，即15000
+      connection-timeout: 15000
+      connection-test-query: SELECT 1
+  redis:
+    database: 0
+    host: 192.168.15.41
+    port: 6379
+    password: 123456
+    jedis:
+      pool:
+        max-active: 20
+  mvc.static-path-pattern: /static/**
+  thymeleaf:
+  cache: false
+  enabled: true
+
+logging:
+  level:
+    #root: info
+    com.xinghui: DEBUG

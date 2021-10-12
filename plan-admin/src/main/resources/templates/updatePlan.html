@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改结算信息</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}" media="all"/>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/js/jquery-1.11.1.min.js}"></script>
+    <script th:src="@{/static/js/common.js}"></script>
+</head>
+<body>
+
+<div class="layui-form" style="margin-top: 30px">
+    <input type="hidden" th:value="${settlementInfo.getId()}" id="idInput">
+    <div class="layui-form-item">
+        <label class="layui-form-label">获取人：</label>
+        <div class="layui-inline">
+            <select name="gainBy" lay-verify="gainBy" id="gainBy">
+                <option value="">请选择</option>
+                <option th:each="user:${userList}" th:value="${user.getId()}" th:text="${user.getName()}"
+                        th:selected="${user.getId() eq settlementInfo.getGainBy()}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">结算人：</label>
+        <div class="layui-inline">
+            <select name="settlementBy" lay-verify="settlementBy" id="settlementBy">
+                <option value="">请选择</option>
+                <option th:each="user:${userList}" th:value="${user.getId()}" th:text="${user.getName()}"
+                        th:selected="${user.getId() eq settlementInfo.getSettlementBy()}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">任务日期：</label>
+            <div class="layui-input-inline">
+                <input type="text" th:value="${settlementInfo.getPlanDate()}" lay-verify="planDate"
+                       name="planDate" class="layui-input" id="planDate" placeholder="yyyy-MM-dd">
+            </div>
+            <label class="layui-form-label">任务地址：</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" th:value="${settlementInfo.getAddress()}" name="address"
+                       id="address" lay-verify="address" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">金额：</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" th:value="${settlementInfo.getMoney()}" name="money"
+                       id="money" lay-verify="money" autocomplete="off">
+            </div>
+            <label class="layui-form-label">是否结算：</label>
+            <div class="layui-inline">
+                <select name="settlementLong" lay-verify="settlementLong" id="settlementLong">
+                    <option th:each="isSettlement:${isSettlements}" th:value="${isSettlement.getId()}"
+                            th:text="${isSettlement.getName()}"
+                            th:selected="${isSettlement.getName() eq settlementInfo.getSettlementName()}"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">普通文本域</label>
+        <div class="layui-input-block">
+            <textarea th:utext="${settlementInfo.getRemark()}" class="layui-textarea" name="remark"
+                      id="remark" lay-verify="remark"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="submit" lay-submit lay-filter="submit" class="layui-btn layui-btn-normal layui-btn-radius">确认
+            </button>
+            <button id="cancel" class="layui-btn layui-btn-radius">取消</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    layui.use(['element', 'layer', 'util', 'laydate', 'form'], function () {
+        var element = layui.element
+            , layer = layui.layer
+            , util = layui.util
+            , form = layui.form
+            , laydate = layui.laydate
+            , $ = layui.$;
+
+        //常规用法
+        laydate.render({
+            elem: '#planDate'
+        });
+
+
+        //取消
+        $("#cancel").on("click", function () {
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+        });
+
+        var id = $("#idInput").val();
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            $.ajax({
+                type: "put",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'accessToken': accessToken,
+                    'terminal': 'pc'
+                },
+                url: parent.ueditorPath + "/amg/settlement/v1/" + id,
+                data: JSON.stringify(data.field),
+                success: function (data) {
+                    if (data.code == 200) {
+                        parent.layui.closeAll();
+                        parent.layui.table.reload(id);
+                    } else {
+                        skipLogin(data.code, data.message);
+                    }
+                }
+            });
+            return false;
+        });
+    });
+
+</script>
+</body>
+</html>
