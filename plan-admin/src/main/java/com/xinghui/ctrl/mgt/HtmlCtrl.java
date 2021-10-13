@@ -63,4 +63,8 @@ public class HtmlCtrl {
         return "saveUser";
     }
 
+    @RequestMapping("/registerAccount")
+    @UnAccessTokenAuth
+    public String registerAccount(){ return "registerAccount";}
+
 }

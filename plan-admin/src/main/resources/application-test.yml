@@ -1,6 +1,7 @@
 server:
   port: 8877
 
+
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
@@ -28,8 +29,8 @@ spring:
     jedis:
       pool:
         max-active: 20
-  mvc.static-path-pattern: /static/**3333333
-  thymeleaf:                                                        
+  mvc.static-path-pattern: /static/**
+  thymeleaf:
   cache: false
   enabled: true
 

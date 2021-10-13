@@ -73,9 +73,34 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <a lay-href="###" class="layadmin-user-jump-change layadmin-link">注册账户</a>
-        <a lay-href="###" class="layadmin-user-jump-change layadmin-link">忘记密码</a>
+        <label class="layui-form-label" style="margin-left:10%;"></label>
+        <div class="layui-input-inline">
+            <a href="javascript:;" class="registerAccount" >注册账户</a>
+            <a href="javascript:;" class="forgetPassword"  >忘记密码</a>
+        </div>
     </div>
 </div>
+<script>
+   layui.use([ 'layer', 'form'],function () {
+       var layer = layui.layer
+           ,form = layui.form
+           ,$ =layui.$;
+       $('.registerAccount').on('click',function(){
+           layer.open({
+               type: 2,
+               title: "注册账户",
+               area: ['40%', '60%'],
+               fix: false,
+               maxmin: true,
+               shadeClose: true,
+               shade: 0.4,
+               skin: 'layui-layer-rim',
+               content: [parent.ueditorPath + '/registerAccount', "no"]
+           });
+
+       });
+
+   });
+</script>
 </body>
 </html>
