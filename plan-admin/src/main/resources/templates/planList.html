@@ -55,7 +55,6 @@
             elem: '#test'
             , url: parent.ueditorPath + '/amg/settlement/v1?accessToken=' + accessToken + '&terminal=pc'
             , parseData: function (res) {
-                console.log(res);
                 return {
                     "code": res.code,
                     "msg": res.message,

@@ -1,8 +1,10 @@
 package com.xinghui.ctrl.mgt;
 
 
+import com.xinghui.config.OperationLog;
 import com.xinghui.dto.SettlementListingDTO;
 import com.xinghui.entity.SettlementListingDO;
+import com.xinghui.enums.OperationLogTypeEnum;
 import com.xinghui.enums.SettlementTypeEnum;
 import com.xinghui.service.SettlementListingService;
 import com.xinghui.service.SysUserService;
@@ -56,6 +58,7 @@ public class SettlementListingMgtCtrl {
     @DeleteMapping("/v1/{id}")
     @ApiOperation(value = "删除")
     @ResponseBody
+    @OperationLog(content = "删除",type = OperationLogTypeEnum.PLAN)
     public ResultDTO delete(@PathVariable Long id) {
         return ResponseUtil.success(settlementListingService.removeById(id));
     }
@@ -63,6 +66,7 @@ public class SettlementListingMgtCtrl {
     @PutMapping("/v1/{id}")
     @ApiOperation(value = "编辑")
     @ResponseBody
+    @OperationLog(content = "编辑",type = OperationLogTypeEnum.PLAN)
     public ResultDTO update(@PathVariable Long id, @RequestBody SettlementListingDTO settlementListingDTO) {
         settlementListingDTO.setId(id);
         return ResponseUtil.success(settlementListingService.update(settlementListingDTO));
@@ -71,6 +75,7 @@ public class SettlementListingMgtCtrl {
     @PostMapping("/v1")
     @ApiOperation(value = "新增")
     @ResponseBody
+    @OperationLog(content = "新增",type = OperationLogTypeEnum.PLAN)
     public ResultDTO save(@RequestBody SettlementListingDTO settlementListingDTO) {
         return ResponseUtil.success(settlementListingService.save(settlementListingDTO));
     }

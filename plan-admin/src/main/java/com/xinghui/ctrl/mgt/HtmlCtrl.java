@@ -1,13 +1,19 @@
 package com.xinghui.ctrl.mgt;
 
 import com.xinghui.config.UnAccessTokenAuth;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
+
 @Controller
 @ApiIgnore
 public class HtmlCtrl {
+
+    @Resource
+    private MapperFacade mapperFacade;
 
     @RequestMapping("/login")
     @UnAccessTokenAuth
@@ -62,5 +68,12 @@ public class HtmlCtrl {
     public String saveUser() {
         return "saveUser";
     }
+
+    @RequestMapping("/operationLogList")
+    @UnAccessTokenAuth
+    public String operationLogList() {
+        return "operationLogList";
+    }
+
 
 }

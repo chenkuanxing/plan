@@ -75,7 +75,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner(""));
-        pc.setParent("com.xinghui.uc");
+        pc.setParent("com");
         pc.setController("ctrl.mgt");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
@@ -132,7 +132,6 @@ public class CodeGenerator {
         strategy.setControllerMappingHyphenStyle(true);
 
         ArrayList<TableFill> tableFills = new ArrayList<>();
-        tableFills.add(new TableFill("tenant_id", FieldFill.INSERT));
         tableFills.add(new TableFill("create_by", FieldFill.INSERT));
         tableFills.add(new TableFill("create_time", FieldFill.INSERT));
         tableFills.add(new TableFill("update_by", FieldFill.INSERT_UPDATE));

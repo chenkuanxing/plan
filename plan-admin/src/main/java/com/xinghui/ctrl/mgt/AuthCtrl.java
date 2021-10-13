@@ -1,12 +1,14 @@
 package com.xinghui.ctrl.mgt;
 
 import com.xinghui.config.GlobalException;
+import com.xinghui.config.OperationLog;
 import com.xinghui.constants.ResultCode;
 import com.xinghui.dto.LoginInfoDTO;
 import com.xinghui.dto.RegisterDTO;
 import com.xinghui.dto.UpdatePassWordDTO;
 import com.xinghui.entity.AccountInfoDO;
 import com.xinghui.entity.SysUserDO;
+import com.xinghui.enums.OperationLogTypeEnum;
 import com.xinghui.enums.TerminalTypeEnum;
 import com.xinghui.service.AccountInfoService;
 import com.xinghui.service.SysUserService;
@@ -66,6 +68,7 @@ public class AuthCtrl {
 
     @PostMapping("/v1/logout")
     @ApiOperation(value = "撤销")
+    @OperationLog(content = "撤销登入",type = OperationLogTypeEnum.LOGIN)
     public ResultDTO logout() {
         accountService.removeToken(RequestContextUtil.userId(), RequestContextUtil.terminal());
         return ResponseUtil.success(true);
@@ -73,6 +76,7 @@ public class AuthCtrl {
 
     @PostMapping("/v1/update-password")
     @ApiOperation(value = "修改密码")
+    @OperationLog(content = "修改密码",type = OperationLogTypeEnum.LOGIN)
     public ResultDTO updatePassWord(@RequestBody UpdatePassWordDTO updatePassWordDTO) {
         if (StringUtils.isBlank(updatePassWordDTO.getNewPassword())) {
             throw new GlobalException(ResultCode.NEW_PASSWORD_NOT_NULL);
@@ -98,6 +102,7 @@ public class AuthCtrl {
 
     @PostMapping("/v1/reset-password/{userId}")
     @ApiOperation(value = "重置密码")
+    @OperationLog(content = "重置密码",type = OperationLogTypeEnum.USER)
     public ResultDTO resetPassWord(@PathVariable Long userId) {
         //获取人员信息
         SysUserDO sysUserDO = sysUserService.getById(userId);
