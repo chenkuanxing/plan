@@ -96,4 +96,73 @@ INSERT INTO `sys_user` VALUES (1, 'admin', 'admin', '00000000', 1, '//tva1.sinai
 INSERT INTO `sys_user` VALUES (1441288520671551489, '陈款型', NULL, NULL, NULL, '//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg', '18253632222', NULL, 1441288520394727425, 1, '2021-09-24 14:28:56', 1, '2021-09-24 14:28:56', 0);
 INSERT INTO `sys_user` VALUES (1441289346446036994, '陈款型1', NULL, NULL, NULL, '//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg', '18253632223', NULL, 1441289344780898305, 1, '2021-09-24 14:32:13', 1, '2021-09-24 14:32:13', 0);
 
+
+CREATE TABLE `operation_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `operation_time` datetime NOT NULL COMMENT '操作时间',
+  `operation_by` bigint(20) DEFAULT NULL COMMENT '操作人id',
+  `type` tinyint(4) NOT NULL COMMENT '类型',
+  `elapsed_time` bigint(20) NOT NULL COMMENT '耗时（秒）',
+  `operation_name` varchar(32) NOT NULL COMMENT '操作人姓名',
+  `remark` varchar(256) DEFAULT NULL COMMENT '备注',
+  `create_by` bigint(20) NOT NULL COMMENT '创建者',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint(20) DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '逻辑删除标志：0未删除 1已删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+
+CREATE TABLE `role_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
+  `role_id` bigint(20) DEFAULT NULL COMMENT '角色id',
+  `create_by` bigint(20) NOT NULL COMMENT '创建者',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint(20) DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '逻辑删除标志：0未删除 1已删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色表';
+
+
+
+CREATE TABLE `role_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `name` varchar(32) NOT NULL COMMENT '角色名称',
+  `create_by` bigint(20) NOT NULL COMMENT '创建者',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint(20) DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '逻辑删除标志：0未删除 1已删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='角色信息表';
+
+CREATE TABLE `role_menu` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+ `role_id` bigint(20) DEFAULT NULL COMMENT '角色id',
+ `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单id',
+  `create_by` bigint(20) NOT NULL COMMENT '创建者',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint(20) DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '逻辑删除标志：0未删除 1已删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='角色菜单表';
+
+
+CREATE TABLE `menu_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `name` varchar(32) NOT NULL COMMENT '菜单名称',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '父级id',
+  `create_by` bigint(20) NOT NULL COMMENT '创建者',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint(20) DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '逻辑删除标志：0未删除 1已删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='菜单信息表';
+
+
+
 SET FOREIGN_KEY_CHECKS = 1;

@@ -37,6 +37,8 @@
     <button id="reloadBtn" class="layui-btn" data-type="reload">搜索</button>
 
     <button id="save" class="layui-btn" style="background-color:blue" lay-event="save">新增</button>
+
+    <button id="export" class="layui-btn" style="background-color:burlywood" lay-event="save">导出</button>
 </div>
 
 <table class="layui-hide" id="test" lay-filter="settlement"></table>
@@ -55,7 +57,6 @@
             elem: '#test'
             , url: parent.ueditorPath + '/amg/settlement/v1?accessToken=' + accessToken + '&terminal=pc'
             , parseData: function (res) {
-                console.log(res);
                 return {
                     "code": res.code,
                     "msg": res.message,
@@ -82,7 +83,6 @@
 
         //搜索
         $("#reloadBtn").click(function (ev) {
-            console.info("reload");
             var settlementSelect = $("#settlementSelect").val();
             var gainByInput = $("#gainByInput").val();
             var settlementByInput = $("#settlementByInput").val();
@@ -99,6 +99,15 @@
                 } //设定异步数据接口的额外参数
             });
         });
+
+        //导出
+        $("#export").click(function () {
+            var settlementSelect = $("#settlementSelect").val();
+            var gainByInput = $("#gainByInput").val();
+            var settlementByInput = $("#settlementByInput").val();
+            window.location.href = parent.ueditorPath + '/amg/settlement/v1/export?settlement=' + settlementSelect + '&accessToken=' + accessToken + '&gainByName=' + gainByInput + '&settlementByName=' + settlementByInput + '&terminal=pc';
+        });
+
         //新增
         $("#save").click(function () {
             layer.open({
@@ -132,7 +141,7 @@
                                 console.log(index);
                                 layer.msg("删除成功", {icon: 1});
                             } else {
-                                skipLogin(data.code,"删除失败");
+                                skipLogin(data.code, "删除失败");
                             }
                         }
                     });

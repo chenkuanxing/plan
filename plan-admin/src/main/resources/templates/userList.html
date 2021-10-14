@@ -130,7 +130,7 @@
                                 layer.close(index);
                                 layer.msg("重置密码成功");
                                 //跳转登入页
-                                location.href = parent.ueditorPath + "/login";
+                                window.parent.location.href = parent.ueditorPath + "/login";
                             } else {
                                 skipLogin(data.code, "重置密码失败");
                             }

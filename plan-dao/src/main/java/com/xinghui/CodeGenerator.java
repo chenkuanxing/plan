@@ -75,7 +75,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner(""));
-        pc.setParent("com.xinghui.uc");
+        pc.setParent("com");
         pc.setController("ctrl.mgt");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
@@ -101,7 +101,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return gc.getOutputDir() + "/com/xinghui/uc/" + pc.getModuleName()
+                return gc.getOutputDir() + "/com/" + pc.getModuleName()
                         + "/mybatis/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
@@ -132,7 +132,6 @@ public class CodeGenerator {
         strategy.setControllerMappingHyphenStyle(true);
 
         ArrayList<TableFill> tableFills = new ArrayList<>();
-        tableFills.add(new TableFill("tenant_id", FieldFill.INSERT));
         tableFills.add(new TableFill("create_by", FieldFill.INSERT));
         tableFills.add(new TableFill("create_time", FieldFill.INSERT));
         tableFills.add(new TableFill("update_by", FieldFill.INSERT_UPDATE));

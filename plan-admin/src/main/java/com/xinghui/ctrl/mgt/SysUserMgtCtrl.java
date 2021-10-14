@@ -1,9 +1,10 @@
 package com.xinghui.ctrl.mgt;
 
 
+import com.xinghui.config.OperationLog;
 import com.xinghui.dto.UserInfoDTO;
 import com.xinghui.entity.SysUserDO;
-import com.xinghui.service.AccountInfoService;
+import com.xinghui.enums.OperationLogTypeEnum;
 import com.xinghui.service.SysUserService;
 import com.xinghui.utils.RequestContextUtil;
 import com.xinghui.utils.ResponseUtil;
@@ -36,9 +37,6 @@ public class SysUserMgtCtrl {
 
     @Resource
     private SysUserService sysUserService;
-
-    @Resource
-    private AccountInfoService accountInfoService;
 
     @GetMapping("/v1/query")
     @ApiOperation(value = "查询用户信息")
@@ -75,6 +73,7 @@ public class SysUserMgtCtrl {
     @PutMapping("/v1")
     @ApiOperation(value = "修改用户信息")
     @ResponseBody
+    @OperationLog(content = "修改用户信息", type = OperationLogTypeEnum.USER)
     public ResultDTO update(@RequestBody UserInfoDTO userInfoDTO) {
         SysUserDO sysUserDO = mapperFacade.map(userInfoDTO, SysUserDO.class);
         sysUserDO.setId(RequestContextUtil.userId());
@@ -84,14 +83,16 @@ public class SysUserMgtCtrl {
     @PostMapping("/v1")
     @ApiOperation(value = "新增用户信息")
     @ResponseBody
+    @OperationLog(content = "新增用户信息", type = OperationLogTypeEnum.USER)
     public ResultDTO save(@RequestBody UserInfoDTO userInfoDTO) {
         sysUserService.save(userInfoDTO);
         return ResponseUtil.success(true);
     }
 
     @DeleteMapping("/v1/{id}")
-    @ApiOperation(value = "新增用户信息")
+    @ApiOperation(value = "删除用户信息")
     @ResponseBody
+    @OperationLog(content = "删除用户信息", type = OperationLogTypeEnum.USER)
     public ResultDTO delete(@PathVariable Long id) {
         sysUserService.remove(id);
         return ResponseUtil.success(true);
