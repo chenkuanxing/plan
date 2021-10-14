@@ -6,6 +6,7 @@
 *.iml
 .idea
 target
+log
 
 # BlueJ files
 *.ctxt
