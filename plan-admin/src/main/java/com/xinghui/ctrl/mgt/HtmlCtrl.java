@@ -24,19 +24,19 @@ public class HtmlCtrl {
     @RequestMapping("/planList")
     @UnAccessTokenAuth
     public String planList() {
-        return "planList";
+        return "plan/planList";
     }
 
     @RequestMapping("/user")
     @UnAccessTokenAuth
     public String user() {
-        return "userList";
+        return "user/userList";
     }
 
     @RequestMapping("/role")
     @UnAccessTokenAuth
     public String role() {
-        return "role";
+        return "role/role";
     }
 
     @RequestMapping("/mainPlan")
@@ -48,25 +48,31 @@ public class HtmlCtrl {
     @RequestMapping("/userInfo")
     @UnAccessTokenAuth
     public String userInfo() {
-        return "userInfo";
+        return "user/userInfo";
     }
 
     @RequestMapping("/updatePassWord")
     @UnAccessTokenAuth
     public String updatePassWord() {
-        return "updatePassWord";
+        return "user/updatePassWord";
     }
 
     @RequestMapping("/saveUser")
     @UnAccessTokenAuth
     public String saveUser() {
-        return "saveUser";
+        return "user/saveUser";
     }
 
     @RequestMapping("/registerAccount")
     @UnAccessTokenAuth
     public String registerAccount() {
         return "registerAccount";
+    }
+
+    @RequestMapping("/operationLogList")
+    @UnAccessTokenAuth
+    public String operationLogList() {
+        return "sys/operationLogList";
     }
 
 }

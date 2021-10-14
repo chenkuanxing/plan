@@ -98,9 +98,9 @@ public class SettlementListingMgtCtrl {
         ModelAndView modelAndView;
         List<SelectVO> userList = sysUserService.lists();
         if (id == null) {
-            modelAndView = new ModelAndView("savePlan");
+            modelAndView = new ModelAndView("plan/savePlan");
         } else {
-            modelAndView = new ModelAndView("updatePlan");
+            modelAndView = new ModelAndView("plan/updatePlan");
             SettlementListingDO settlementListingDO = settlementListingService.getById(id);
             SettlementListingVO settlementListingVO = mapperFacade.map(settlementListingDO, SettlementListingVO.class);
             userList.forEach(selectVO -> {

@@ -65,7 +65,7 @@ public class SysUserMgtCtrl {
     @GetMapping("/v1/user-info")
     @ApiOperation(value = "查询用户详细信息")
     public ModelAndView userInfo() {
-        ModelAndView modelAndView = new ModelAndView("userInfo");
+        ModelAndView modelAndView = new ModelAndView("user/userInfo");
         modelAndView.addObject("userInfo", mapperFacade.map(sysUserService.getById(RequestContextUtil.userId()), UserInfoVO.class));
         return modelAndView;
     }
