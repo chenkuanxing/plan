@@ -46,7 +46,9 @@
             elem: '#test'
             , url: parent.ueditorPath + '/amg/log/v1?accessToken=' + accessToken + '&terminal=pc'
             , parseData: function (res) {
-                console.log(res);
+                if (res.code != 200){
+                    skipLogin(res.code,res.message);
+                }
                 return {
                     "code": res.code,
                     "msg": res.message,

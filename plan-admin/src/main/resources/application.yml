@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: test
+    active: prod
 
 mybatis-plus:
   global-config:
@@ -15,4 +15,4 @@ edu-eval:
     white-list: /doc.html,/swagger-resources,/v2/api-docs,/error,/amg/auth/v1/login,/amg/auth/v1/register
 
 jwt:
-  overdue-time: 3600000
+  overdue-time: 360000000

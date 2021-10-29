@@ -140,7 +140,7 @@ public class SettlementListingMgtCtrl {
         try {
             response.setCharacterEncoding("UTF-8");
             response.setHeader("content-Type", "application/vnd.ms-excel");
-            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("任务清单" + DateUtil.format(new Date(), "yyyy-MM-dd"), "UTF-8")+".xls");
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("任务清单" + DateUtil.format(new Date(), "yyyy-MM-dd"), "UTF-8") + ".xls");
             workbook.write(response.getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);

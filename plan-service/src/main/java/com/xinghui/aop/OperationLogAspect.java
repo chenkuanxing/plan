@@ -65,7 +65,7 @@ public class OperationLogAspect {
             long beginTime = beginTimeThreadLocal.get().getTime();
             long endTime = System.currentTimeMillis();
             //请求耗时
-            Long logElapsedTime = endTime - beginTime;
+            long logElapsedTime = endTime - beginTime;
 
             LocalDateTime operationTime = LocalDateTime.ofEpochSecond(beginTime / 1000, 0, ZoneOffset.ofHours(8));
 
